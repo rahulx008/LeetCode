@@ -1,0 +1,44 @@
+class Solution {
+    public int threeSumClosest(int[] nums, int target) {
+        
+        int mindiff = Integer.MAX_VALUE, result = 0;
+        // if size less than 3, no triplet possible
+        if(nums.length<3) return result;
+        
+        Arrays.sort(nums);
+        
+
+        int n =nums.length;
+        for(int i = 0; i<n-2; i++){
+            
+            // for same value, skip to remove duplicates
+            if(i>0 && nums[i-1]==nums[i]) continue;
+
+            int left = i+1; 
+            int right = n-1;
+
+            while(left<right){
+                
+                int sum = nums[left]+nums[right]+nums[i];
+                if(sum==target){
+                    return sum;
+
+                    //remove Duplicacy
+                    
+                    
+                }else if(sum > target){
+                    
+                    right --;
+                }else{
+                    left ++;
+                }
+
+                if(mindiff > Math.abs(sum-target)){
+                    mindiff = Math.abs(sum-target);
+                    result = sum;
+                }    
+            }
+        }
+        return result;
+    }
+}
