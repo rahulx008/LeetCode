@@ -1,0 +1,58 @@
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        
+        List<List<Integer>> result = new ArrayList<>();
+        
+        // if size less than 3, no triplet possible
+        if(nums.length<3) return result;
+        
+        Arrays.sort(nums);
+        
+        //if all positive numbers there, triplet not possible
+        if(nums[0]>0){
+            return result;
+        }
+
+        int n =nums.length;
+        for(int i = 0; i<n-2; i++){
+            // once we start getting all positives, triplets can't be prepared.
+            if(nums[i]>0) break;
+
+            // for same value, skip to remove duplicates
+            if(i>0 && nums[i-1]==nums[i]) continue;
+
+            int left = i+1; 
+            int right = n-1;
+            int target = -nums[i];
+
+            while(left<right){
+                
+                int sum = nums[left]+nums[right];
+                if(sum==target){
+                    // add the combination
+                    List<Integer> triplet = new ArrayList<>();
+                    triplet.add(nums[i]);
+                    triplet.add(nums[left]);
+                    triplet.add(nums[right]);
+
+                    result.add(triplet);
+                    left++; right--;
+
+                    //remove Duplicacy
+                    while(left<right && nums[left]==nums[left-1]){
+                        left++;
+                    }
+                    while(left<right && nums[right]==nums[right+1]){
+                        right--;
+                    }
+                    
+                }else if(sum > target){
+                    right --;
+                }else{
+                    left ++;
+                }
+            }
+        }
+        return result;
+    }
+}
