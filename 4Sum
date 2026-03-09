@@ -1,0 +1,62 @@
+class Solution {
+    public List<List<Integer>> fourSum(int[] nums, int total) {
+
+        
+        List<List<Integer>> result = new ArrayList<>();
+        
+        // if size less than 3, no quadruplet possible
+        if(nums.length<4) return result;
+        
+        Arrays.sort(nums);
+        
+        //if all positive numbers there, quadruplet not possible
+        
+
+        int n =nums.length;
+        for(int k=0; k<n-3; k++){
+            if(k>0 && nums[k-1]==nums[k]) continue;
+
+            for(int i = k+1; i<n-2; i++){
+
+                // for same value, skip to remove duplicates
+                if(i>k+1 && nums[i-1]==nums[i]) continue;
+
+                int left = i+1; 
+                int right = n-1;
+                int target = total-nums[k];
+
+                while(left<right){
+                    
+                    long sum = (long) nums[left] + nums[right] + nums[i];
+                    if(sum==target){
+                        // add the combination
+                        List<Integer> quadruplet = new ArrayList<>();
+                        quadruplet.add(nums[k]);
+                        quadruplet.add(nums[i]);
+                        quadruplet.add(nums[left]);
+                        quadruplet.add(nums[right]);
+
+                        result.add(quadruplet);
+                        left++; right--;
+
+                        //remove Duplicacy
+                        while(left<right && nums[left]==nums[left-1]){
+                            left++;
+                        }
+                        while(left<right && nums[right]==nums[right+1]){
+                            right--;
+                        }
+                        
+                    }else if(sum > target){
+                        right --;
+                    }else{
+                        left ++;
+                    }
+                }
+            }
+        }
+
+
+        return result;
+    }
+}
